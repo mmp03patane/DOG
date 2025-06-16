@@ -1,1 +1,586 @@
-dog
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paws & Claws Grooming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400&family=Oswald:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet" />
+  <style>
+  /* Universal Box-sizing and Base Styles */
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+  body {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: #f4f3ee; /* Main background off-white */
+  color: #333; /* Main text dark gray */
+  line-height: 1.6;
+  font-size: 1.25rem;
+  text-align: center;
+  }
+  /* Header Styles */
+  header {
+  background-color: rgba(68, 68, 68, 0.7); /* Semi-transparent dark gray */
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; /* Fixed position for the semi-lock effect */
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100; /* Ensure header is above other content */
+  transition: top 0.3s ease-in-out; /* Smooth transition for hiding/showing */
+  }
+  .logo img {
+  height: 60px; /* Increased the height of the logo image */
+  }
+  /* Desktop Navigation */
+  nav.desktop-nav {
+  display: block;
+  }
+  nav.desktop-nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 2rem;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  }
+  nav.desktop-nav a:hover {
+  color: #ddd;
+  }
+  /* Hamburger Menu (Hidden by default on desktop) */
+  .hamburger-menu {
+  display: none; /* Hidden on desktop */
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 20;
+  }
+  .hamburger-menu .bar {
+  height: 3px;
+  background-color: #fff;
+  width: 100%;
+  }
+  /* Mobile Navigation (Hidden by default, shown with JS) */
+  nav.mobile-nav {
+  display: none; /* Hidden by default */
+  position: fixed; /* Use fixed for mobile nav too */
+  top: 70px; /* Positions it right below the header (adjust if header height changes) */
+  left: 0;
+  width: 100%;
+  background-color: rgba(68, 68, 68, 0.9); /* Slightly darker for mobile menu */
+  z-index: 90;
+  text-align: right;
+  transform: translateY(-100%); /* Start off-screen */
+  transition: transform 0.3s ease-in-out;
+  }
+  nav.mobile-nav.open {
+  display: block; /* Toggled by JavaScript */
+  transform: translateY(0); /* Slide in */
+  }
+  nav.mobile-nav a {
+  color: #fff;
+  display: block;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  nav.mobile-nav a:last-child {
+  border-bottom: none;
+  }
+  nav.mobile-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  }
+  /* Hero Section Styles */
+  .hero {
+  background-image: url('https://github.com/mmp03patane/DOG/blob/main/Dog%20grooming.JPG?raw=true');
+  background-size: cover;
+  background-position: center;
+  padding: 8rem 1rem; /* More padding for hero section */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh; /* Make hero section full viewport height */
+  color: #fff; /* White text for contrast on background image */
+  position: relative; /* Needed for overlay */
+  }
+  .hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay for better text readability */
+  z-index: 1;
+  }
+  .hero > * { /* All direct children of hero to be above overlay */
+  position: relative;
+  z-index: 2;
+  }
+  .hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 4.5rem; /* Larger font for desktop */
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7); /* Text shadow for readability */
+  }
+  .hero h2 { /* Using h2 for "Now taking new clients." */
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  }
+  .cta-button {
+  background-color: #a0855b; /* A nice brown/earthy tone for the button */
+  color: #fff;
+  border: none;
+  padding: 1.2rem 3rem;
+  font-size: 1.4rem;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  border-radius: 50px; /* More rounded button */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+  display: inline-block; /* Allow padding and margin */
+  text-decoration: none; /* Remove underline for anchor */
+  }
+  .cta-button:hover {
+  background-color: #c4a775; /* Lighter brown on hover */
+  transform: translateY(-3px); /* Slight lift on hover */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  /* General Section Styles (for new sections) */
+  section {
+  padding: 4rem 1rem;
+  text-align: center;
+  }
+  section h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  color: #5d4037; /* Brownish heading */
+  margin-bottom: 2.5rem;
+  }
+  section p {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto 1.5rem auto;
+  }
+  /* Price List Section */
+  .price-list-section {
+  background-color: #f8f8f8; /* Light off-white */
+  }
+  .price-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  }
+  .price-card {
+  background-color: #FFFFFF;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+  text-align: left;
+  }
+  .price-card h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.8rem;
+  color: #a0855b; /* Brown accent */
+  margin-bottom: 1.5rem;
+  text-align: center;
+  }
+  .price-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.1rem;
+  color: #333;
+  }
+  .price-item strong {
+  color: #000;
+  font-weight: 600;
+  }
+  /* About Section */
+  .about-section {
+  background-color: #FFFFFF;
+  }
+  .about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: left;
+  }
+  .about-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .about-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  }
+  /* Booking Form Section */
+  .booking-form-section {
+  background-color: #f8f8f8;
+  }
+  .booking-form-panel {
+  background-color: #FFFFFF;
+  padding: 3rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  color: #222;
+  }
+  .booking-form-panel label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  }
+  .booking-form-panel input[type="text"],
+  .booking-form-panel input[type="email"],
+  .booking-form-panel input[type="tel"],
+  .booking-form-panel input[type="date"],
+  .booking-form-panel input[type="time"],
+  .booking-form-panel textarea,
+  .booking-form-panel select {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  color: #222;
+  }
+  .booking-form-panel textarea {
+  resize: vertical;
+  min-height: 100px;
+  }
+  .booking-form-panel button {
+  background-color: #a0855b;
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  }
+  .booking-form-panel button:hover {
+  background-color: #c4a775;
+  }
+  /* --- MEDIA QUERIES FOR MOBILE (max-width: 767px) --- */
+  @media (max-width: 767px) {
+  /* Show hamburger menu and hide desktop nav on mobile */
+  .hamburger-menu {
+  display: flex; /* Show hamburger */
+  }
+  nav.desktop-nav {
+  display: none; /* Hide desktop nav */
+  }
+  header {
+  padding: 0.8rem 1.5rem; /* Reduced top and bottom padding for a smaller mobile header */
+  }
+  .logo {
+  margin-left: 0; /* Reset any negative margin from previous site */
+  }
+ 
+  .hero {
+  padding: 6rem 1rem; /* Adjust padding for mobile hero */
+  }
+  .hero h1 {
+  font-size: 3rem; /* Smaller font for mobile heading */
+  }
+  .hero h2 {
+  font-size: 1.8rem; /* Adjusted font size for mobile */
+  }
+  .cta-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  }
+  /* General Section Mobile Styles */
+  section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.8rem;
+  }
+  section p {
+  font-size: 1.1rem;
+  }
+  /* Price List Section Mobile */
+  .price-card {
+  min-width: unset;
+  max-width: 90%;
+  margin: 0 auto;
+  }
+  .price-card h3 {
+  font-size: 1.6rem;
+  }
+  .price-item {
+  font-size: 1rem;
+  }
+  /* About Section Mobile */
+  .about-content {
+  flex-direction: column;
+  }
+  /* Booking Form Section Mobile */
+  .booking-form-panel {
+  padding: 2rem 1.5rem;
+  max-width: 90%;
+  }
+  .booking-form-panel label {
+  font-size: 0.9rem;
+  }
+  .booking-form-panel input[type="text"],
+  .booking-form-panel input[type="email"],
+  .booking-form-panel input[type="tel"],
+  .booking-form-panel input[type="date"],
+  .booking-form-panel input[type="time"],
+  .booking-form-panel textarea,
+  .booking-form-panel select {
+  padding: 0.6rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  }
+  .booking-form-panel button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  }
+  }
+  </style>
+ </head>
+ <body>
+  <header>
+  <a href="index.html" class="logo">
+  <img src="http://googleusercontent.com/image_generation_content/0" alt="Dog Grooming Logo" />
+  </a>
+  <div class="hamburger-menu" onclick="toggleMobileMenu()">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  </div>
+  <nav class="desktop-nav">
+  <a href="#price-list">Price List</a>
+  <a href="#about">About</a>
+  <a href="#book-now">Book Now</a>
+  <a href="#contact">Contact</a>
+  </nav>
+  <nav class="mobile-nav" id="mobileNav">
+  <a href="#price-list" onclick="toggleMobileMenu()">Price List</a>
+  <a href="#about" onclick="toggleMobileMenu()">About</a>
+  <a href="#book-now" onclick="toggleMobileMenu()">Book Now</a>
+  <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+  </nav>
+  </header>
+  <section class="hero">
+  <h1>Pamper Your Pooch</h1>
+  <h2>We're now accepting new furry clients!</h2>
+  <a href="#book-now" class="cta-button">Book Now</a>
+  </section>
+  <section id="price-list" class="price-list-section">
+  <h2>Our Services & Prices</h2>
+  <p>Treat your best friend to the ultimate grooming experience. Here's a glimpse of what we offer:</p>
+  <div class="price-list-container">
+  <div class="price-card">
+  <h3>Grooming Packages</h3>
+  <div class="price-item">
+  <span>Small Dog Wash & Tidy</span>
+  <strong>$65 - $85</strong>
+  </div>
+  <div class="price-item">
+  <span>Medium Dog Wash & Tidy</span>
+  <strong>$75 - $95</strong>
+  </div>
+  <div class="price-item">
+  <span>Large Dog Wash & Tidy</span>
+  <strong>$90 - $120</strong>
+  </div>
+  <div class="price-item">
+  <span>Full Grooming (Small)</span>
+  <strong>$95 - $130</strong>
+  </div>
+   <div class="price-item">
+  <span>Full Grooming (Medium)</span>
+  <strong>$110 - $150</strong>
+  </div>
+   <div class="price-item">
+  <span>Full Grooming (Large)</span>
+  <strong>$130 - $180</strong>
+  </div>
+  </div>
+  <div class="price-card">
+  <h3>Additional Services</h3>
+  <div class="price-item">
+  <span>Nail Trim</span>
+  <strong>$20 - $35</strong>
+  </div>
+  <div class="price-item">
+  <span>Teeth Cleaning</span>
+  <strong>$15 - $25</strong>
+  </div>
+  <div class="price-item">
+  <span>Flea Treatment</span>
+  <strong>$10 - $20</strong>
+  </div>
+  <div class="price-item">
+  <span>De-matting (per 15 min)</span>
+  <strong>$15</strong>
+  </div>
+  </div>
+  <div class="price-card">
+  <h3>Spa & Pampering</h3>
+  <div class="price-item">
+  <span>Pawdicure</span>
+  <strong>$30</strong>
+  </div>
+  <div class="price-item">
+  <span>Blueberry Facial</span>
+  <strong>$25</strong>
+  </div>
+  <div class="price-item">
+  <span>De-shedding Treatment</span>
+  <strong>$40 - $60</strong>
+  </div>
+  </div>
+  </div>
+  </section>
+  <section id="about" class="about-section">
+  <h2>About Us</h2>
+  <div class="about-content">
+  <img src="http://googleusercontent.com/image_generation_content/1" alt="Dog being groomed" style="float: left; margin-right: 2rem; max-width: 50%; height: auto; object-fit: cover;">
+  <div class="about-text">
+  <p>Welcome to Paws & Claws Grooming, where we treat your furry friends like royalty. We are passionate about providing top-notch grooming services in a comfortable and stress-free environment.</p>
+  <p>Our experienced and caring groomers are dedicated to ensuring your dog looks and feels their best. We use only high-quality products and techniques to keep their coats healthy and shiny.</p>
+  <p>Located in the heart of Selby, we're committed to providing a friendly and personalized experience for every pup and their owner. We look forward to welcoming you!</p>
+  </div>
+  </div>
+  </section>
+  <section id="book-now" class="booking-form-section">
+  <h2>Book an Appointment</h2>
+  <div class="booking-form-panel">
+  <form action="#" method="POST">
+  <label for="pet-name">Pet's Name:</label>
+  <input type="text" id="pet-name" name="pet_name" required>
+  <label for="owner-name">Your Name:</label>
+  <input type="text" id="owner-name" name="owner_name" required>
+  <label for="email-book">Email:</label>
+  <input type="email" id="email-book" name="email" required>
+  <label for="phone-book">Phone:</label>
+  <input type="tel" id="phone-book" name="phone">
+  <label for="service">Desired Service:</label>
+  <select id="service" name="service" required>
+  <option value="">-- Please select a service --</option>
+  <option value="wash-tidy-s">Wash & Tidy (Small)</option>
+  <option value="wash-tidy-m">Wash & Tidy (Medium)</option>
+  <option value="wash-tidy-l">Wash & Tidy (Large)</option>
+    <option value="full-groom-s">Full Grooming (Small)</option>
+  <option value="full-groom-m">Full Grooming (Medium)</option>
+    <option value="full-groom-l">Full Grooming (Large)</option>
+  <option value="nail-trim">Nail Trim</option>
+  <option value="teeth-clean">Teeth Cleaning</option>
+  <option value="flea-treat">Flea Treatment</option>
+  <option value="de-matting">De-matting</option>
+  <option value="pawdicure">Pawdicure</option>
+  <option value="blueberry-facial">Blueberry Facial</option>
+   <option value="de-shedding">De-shedding Treatment</option>
+  <option value="other">Other (please specify below)</option>
+  </select>
+  <label for="appointment-date">Preferred Date:</label>
+  <input type="date" id="appointment-date" name="appointment_date" required>
+  <label for="appointment-time">Preferred Time:</label>
+  <input type="time" id="appointment-time" name="appointment_time" min="09:00" max="17:00" required>
+  <small style="display: block; margin-top: -1rem; margin-bottom: 1rem; color: #555;">Our hours: 9:00 AM - 5:00 PM</small>
+  <label for="message-book">Any specific requests or details?</label>
+  <textarea id="message-book" name="message" rows="5"></textarea>
+  <button type="submit">Request Appointment</button>
+  </form>
+  </div>
+  </section>
+  <section id="contact" class="contact-section" style="background-color: #f0f0f0; padding-bottom: 2rem;">
+  <h2>Contact Us</h2>
+  <p>Have questions or want to learn more? We're here to help!</p>
+  <p><strong>Phone:</strong> (03) 9754 0000</p>
+  <p><strong>Email:</strong> info@pawsandclaws.com.au</p>
+  <p><strong>Address:</strong> 123 Bark Avenue, Selby, VIC 3159</p>
+  <p style="margin-top: 2rem;">Follow us on social media for adorable updates!</p>
+  </section>
+  <script>
+  // Mobile Menu Toggle
+  function toggleMobileMenu() {
+  document.getElementById("mobileNav").classList.toggle("open");
+  }
+  // Header Scroll Logic (Semi-Lock Header)
+  let lastScrollY = window.scrollY;
+  const header = document.querySelector('header');
+  const headerHeight = header.offsetHeight; // Get header height
+  window.addEventListener('scroll', () => {
+  if (window.scrollY > lastScrollY && window.scrollY > headerHeight) {
+  // Scrolling down and past header height
+  header.style.top = `-${headerHeight}px`; // Hide header
+  } else if (window.scrollY < lastScrollY || window.scrollY <= headerHeight) {
+  // Scrolling up or at the top of the page
+  header.style.top = '0'; // Show header
+  }
+  lastScrollY = window.scrollY;
+  });
+  // Smooth Scroll for Anchor Links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+  e.preventDefault();
+  document.querySelector(this.getAttribute('href')).scrollIntoView({
+  behavior: 'smooth'
+  });
+  // Close mobile menu if open after clicking an anchor
+  if (document.getElementById("mobileNav").classList.contains("open")) {
+  toggleMobileMenu();
+  }
+  });
+  });
+  // Automatically set min date for booking form to today
+  document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+  const minDate = `<span class="math-inline">\{year\}\-</span>{month}-${day}`;
+  document.getElementById('appointment-date').setAttribute('min', minDate);
+  });
+  </script>
+ </body>
+ </html>
